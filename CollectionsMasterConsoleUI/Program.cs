@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace CollectionsMasterConsoleUI
 {
@@ -13,18 +15,32 @@ namespace CollectionsMasterConsoleUI
 
             #region Arrays
             //TODO: Create an integer Array of size 50
-            
+            var bigArr = new int[50];
 
             //TODO: Create a method to populate the number array with 50 random numbers that are between 0 and 50
+            static int[] CreateBigArray(int[] bigArr)
+            {
+                var rnd = new Random(); 
             
+                for (int i = 0; i < bigArr.Length; i++)
+                {
+                    bigArr[i] = rnd.Next(51);
+                }
+
+                return bigArr;
+            }
+
+            bigArr = CreateBigArray(bigArr);
 
             //TODO: Print the first number of the array
-
+            Console.WriteLine($"The first number of the random array is: {bigArr[0]}");
+            
             //TODO: Print the last number of the array            
-
+            Console.WriteLine($"The last is: {bigArr.Last()}");
+            
             Console.WriteLine("All Numbers Original");
             //UNCOMMENT this method to print out your numbers from arrays or lists
-            //NumberPrinter();
+            NumberPrinter(bigArr);
             Console.WriteLine("-------------------");
 
             //TODO: Reverse the contents of the array and then print the array out to the console.
@@ -34,22 +50,32 @@ namespace CollectionsMasterConsoleUI
             */
 
             Console.WriteLine("All Numbers Reversed:");
-
+            Console.WriteLine(string.Join(", ", bigArr.Reverse()));
             Console.WriteLine("---------REVERSE CUSTOM------------");
 
+            for(int i = bigArr.Length - 1; i >= 0; i--)
+            {
+                Console.WriteLine(bigArr[i]);
+            }
+            
             Console.WriteLine("-------------------");
 
             //TODO: Create a method that will set numbers that are a multiple of 3 to zero then print to the console all numbers
             Console.WriteLine("Multiple of three = 0: ");
-            
+
+            threeToZero(bigArr);
 
             Console.WriteLine("-------------------");
 
             //TODO: Sort the array in order now
             /*      Hint: Array.____()      */
-            Console.WriteLine("Sorted numbers:");
+            Array.Sort(bigArr);
+            foreach (int num in bigArr)
+            {
+                Console.WriteLine(num);
+            }
+            Console.WriteLine(String.Join(", ", bigArr));
             
-
             Console.WriteLine("\n************End Arrays*************** \n");
             #endregion
 
@@ -102,10 +128,20 @@ namespace CollectionsMasterConsoleUI
             #endregion
         }
 
-        private static void ThreeKiller(int[] numbers)
+        static void threeToZero(int[] numbers)
         {
-            
+            var newArray = new int[numbers.Length];
+            for(int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] % 3 != 0)
+                {
+                    newArray[i] = numbers[i];
+                }
+                numbers[i] = 0;
+            }
+            Console.WriteLine(string.Join(", ", newArray));
         }
+
 
         private static void OddKiller(List<int> numberList)
         {
